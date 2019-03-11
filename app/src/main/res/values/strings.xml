@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Новости</string>
+    <string name="favourites_msg">Новость добавлена в избранное</string>
+    <string name="already_in_favourites_msg">Новость уже была добавлена в избранное</string>
+</resources>
