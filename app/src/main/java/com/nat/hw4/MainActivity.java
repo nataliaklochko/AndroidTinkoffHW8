@@ -29,25 +29,25 @@ public class MainActivity extends AppCompatActivity {
             add(new NewsItem(
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
                     "Phasellus placerat viverra auctor. Duis laoreet mi eget elit efficitur, ac hendrerit justo ultrices. Pellentesque ornare, risus at pellentesque pharetra, est dui efficitur lorem, id ornare nulla orci nec leo",
-                    "11-3-2019",
+                    "13-3-2019",
                     "Donec eu urna consequat, feugiat felis non, cursus elit. Mauris vulputate porttitor ante, ut porta enim porta nec. Donec sem felis, commodo vel fermentum eu, aliquet at nisi. Aenean ullamcorper consectetur lorem, ut interdum est imperdiet a. Donec et purus ultricies, auctor magna eget, mollis ex. Aenean pretium rhoncus elit at posuere. Vivamus tempor sollicitudin urna, vel ullamcorper massa sollicitudin eu.",
                     "last"));
             add(new NewsItem(
                     "Orci varius natoque penatibus et magnis dis parturient montes",
                     "Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus",
-                    "11-3-2019",
+                    "13-3-2019",
                     "Nunc mattis tempor mauris et hendrerit. Nunc condimentum massa at tellus sollicitudin lobortis. Nunc luctus sapien ut dui ullamcorper, eu dictum diam viverra. Morbi finibus tristique urna vitae malesuada. Sed dignissim posuere magna id dictum. Sed scelerisque tempor velit, id euismod lectus accumsan in.",
                     "last"));
             add(new NewsItem(
                     "Vestibulum gravida",
                     "Vestibulum gravida, mauris sit amet posuere luctus, mi nisl ultrices lectus, porttitor faucibus dui libero eu mauris",
-                    "10-3-2019",
+                    "12-3-2019",
                     "Vivamus malesuada commodo leo, eget faucibus lacus faucibus ut. Maecenas pretium, sapien ut hendrerit egestas, orci enim hendrerit quam, sed pellentesque purus massa aliquet mauris. Cras consequat odio egestas pellentesque tempus. Nam id venenatis ipsum, malesuada blandit felis. Etiam in dui quis nibh sodales dapibus. Curabitur nec ligula vitae nunc blandit finibus non sit amet tortor. Suspendisse congue gravida purus. Nulla quam diam, ultrices ac quam sed, interdum dignissim ex. Morbi consequat mi eros, vitae lobortis elit efficitur et. Integer magna mauris, aliquam et vestibulum nec, semper sit amet eros. Duis porttitor justo quis tortor tristique, vel varius turpis consequat. Suspendisse non leo vel felis dapibus finibus ut at urna. Nam non porttitor dolor. Integer aliquam vel orci vitae maximus. Duis eget consectetur mauris.",
                     "last"));
             add(new NewsItem(
                     "Praesent ipsum leo",
                     "Praesent ipsum leo, imperdiet sed tincidunt non, ultricies condimentum odio",
-                    "9-3-2018",
+                    "11-3-2018",
                     "Curabitur iaculis felis non egestas fermentum. Proin non tortor sed ante congue rhoncus. In varius nec magna quis eleifend. Pellentesque semper convallis quam eget elementum. Fusce tincidunt vitae felis ut lobortis. Nullam nec ex congue, sodales est ut, iaculis massa. Nam eleifend finibus tortor. Fusce nec lacinia tortor. Donec fringilla sagittis felis, vitae efficitur turpis blandit vel. Etiam quis ullamcorper mi. Praesent sit amet feugiat diam, eu lacinia magna.",
                     "last"));
             add(new NewsItem(
@@ -80,35 +80,17 @@ public class MainActivity extends AppCompatActivity {
     private static ArrayList<NewsItem> newsFavourites = new ArrayList<NewsItem>() {
         {
             add(new NewsItem(
-                    "Mauris dolor lorem",
-                    "Suspendisse id dictum orci",
-                    "10-3-2019",
-                    "Suspendisse suscipit rutrum euismod. Sed sagittis luctus tortor id ultricies. Sed dapibus mi sit amet enim venenatis varius. Proin lacinia arcu at massa interdum, ac congue nisi sodales. Vivamus condimentum luctus sapien non commodo. Vestibulum in venenatis lectus. Duis congue elit sit amet mi congue, eu dignissim lorem lacinia. Nunc congue ut turpis ut volutpat.",
-                    ""));
+                    "Orci varius natoque penatibus et magnis dis parturient montes",
+                    "Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus",
+                    "13-3-2019",
+                    "Nunc mattis tempor mauris et hendrerit. Nunc condimentum massa at tellus sollicitudin lobortis. Nunc luctus sapien ut dui ullamcorper, eu dictum diam viverra. Morbi finibus tristique urna vitae malesuada. Sed dignissim posuere magna id dictum. Sed scelerisque tempor velit, id euismod lectus accumsan in.",
+                    "last"));
             add(new NewsItem(
-                    "Maecenas ac hendrerit lacus",
-                    "Sed risus nulla, viverra eget risus ut, imperdiet eleifend lacus",
-                    "9-3-2019",
-                    "Nunc vehicula, elit ornare facilisis fringilla, dolor magna rutrum libero, sed semper ipsum justo a ipsum. Aenean neque mauris, scelerisque id lorem in, hendrerit ornare lectus. Integer mattis sed dui ut fringilla. Phasellus ut iaculis nisi. In aliquet ligula arcu. Suspendisse quis pulvinar neque. Sed in ullamcorper urna.",
-                    ""));
-            add(new NewsItem(
-                    "Sed sit amet felis aliquam",
-                    "Integer elementum imperdiet ultricies",
-                    "8-3-2019",
-                    "Fusce lorem leo, imperdiet quis sem vitae, auctor tempor massa. Curabitur maximus tellus in sapien scelerisque, scelerisque euismod orci semper. In viverra quam et lacinia lobortis. Integer eget sapien eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla pretium rutrum nisi, et rutrum urna faucibus sed.",
-                    ""));
-            add(new NewsItem(
-                    "Nulla porttitor lacinia urna, maximus imperdiet velit faucibus in",
-                    "Ut nec mi ac eros convallis maximus",
-                    "8-3-2019",
-                    "Vestibulum pellentesque, massa id gravida mollis, massa velit placerat turpis, quis bibendum lacus lacus eu nisi. Mauris sed nisl lacinia, aliquet est sit amet, semper risus. Integer fringilla lacinia purus et fermentum. Cras lobortis molestie turpis, at sollicitudin eros sodales quis. Sed ac dolor enim.",
-                    ""));
-            add(new NewsItem(
-                    "Nulla molestie urna eget ornare porttitor",
-                    "Mauris tempus erat urna, vel mattis tortor commodo efficitur",
-                    "8-3-2019",
-                    "Morbi nulla leo, semper in orci non, condimentum varius nunc. Integer condimentum bibendum gravida. Mauris placerat arcu nec velit gravida, in fermentum ipsum feugiat. Pellentesque consequat vitae elit at placerat. Donec ornare sit amet felis vitae viverra. Nulla commodo tempor neque vitae vestibulum. Donec ut metus et eros aliquet scelerisque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam leo arcu, commodo sed elit ut, condimentum rhoncus nisi. Suspendisse potenti. Fusce iaculis condimentum mi, in faucibus nulla egestas gravida.",
-                    ""));
+                    "Nulla aliquam diam ligula",
+                    "Quisque blandit sagittis sem sed dignissim",
+                    "5-3-2018",
+                    "Aenean ac accumsan diam. Aliquam in urna purus. Phasellus a cursus nibh. Suspendisse egestas finibus leo at imperdiet. Mauris a mauris posuere, condimentum nulla eu, malesuada metus. Duis luctus sapien et felis placerat mollis. Phasellus semper a lorem vitae venenatis. Donec dictum, lectus a iaculis laoreet, purus odio varius dolor, vitae rutrum libero augue eget ante. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur eu neque convallis, tristique risus vel, molestie nisl.",
+                    "last"));
         }
     };
 
