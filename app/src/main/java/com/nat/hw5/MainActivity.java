@@ -1,14 +1,10 @@
 package com.nat.hw5;
 
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -19,10 +15,7 @@ public class MainActivity extends AppCompatActivity {
     private  NewsPageFragment newsLastFragment;
     private static NewsPageFragment newsFavouritesFragment;
 
-    private ArrayList<RecyclerViewItem> newsList = new ArrayList<RecyclerViewItem>();
-    private ArrayList<RecyclerViewItem> favouritesNewsList = new ArrayList<RecyclerViewItem>();
-
-
+    protected static final String PREF = "settings";
 
 
     @Override
@@ -34,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         fragmentPagerAdapter = new NewsFragmentPagerAdapter(getSupportFragmentManager());
 
-        newsLastFragment = NewsPageFragment.newInstance(NewsPageFragment.LAST, false);
-        newsFavouritesFragment = NewsPageFragment.newInstance(NewsPageFragment.FAV, true);
+        newsLastFragment = NewsPageFragment.newInstance(true, false);
+        newsFavouritesFragment = NewsPageFragment.newInstance(false, true);
         fragmentPagerAdapter.addFragment("", newsLastFragment);
         fragmentPagerAdapter.addFragment("", newsFavouritesFragment);
 

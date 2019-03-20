@@ -48,10 +48,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         int pos = newsViewHolder.getAdapterPosition();
                         if (pos != RecyclerView.NO_POSITION) {
                             NewsItem newsItemPos = (NewsItem) news.get(pos);
-                            boolean last = (newsViewModel.getFavouriteNews(newsItemPos.getId()) == null);
 
                             intent.putExtra(NewsActivity.NEWS_TAG, news.get(pos));
-                            intent.putExtra(NewsActivity.LAST_TAG, last);
                             context.startActivity(intent);
                         }
                     }

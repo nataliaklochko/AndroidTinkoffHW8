@@ -39,25 +39,25 @@ public abstract class NewsDatabase extends RoomDatabase {
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
                         "Phasellus placerat viverra auctor. Duis laoreet mi eget elit efficitur, ac hendrerit justo ultrices. Pellentesque ornare, risus at pellentesque pharetra, est dui efficitur lorem, id ornare nulla orci nec leo",
                         "Donec eu urna consequat, feugiat felis non, cursus elit. Mauris vulputate porttitor ante, ut porta enim porta nec. Donec sem felis, commodo vel fermentum eu, aliquet at nisi. Aenean ullamcorper consectetur lorem, ut interdum est imperdiet a. Donec et purus ultricies, auctor magna eget, mollis ex. Aenean pretium rhoncus elit at posuere. Vivamus tempor sollicitudin urna, vel ullamcorper massa sollicitudin eu.",
-                        "13-3-2019"
+                        "21-3-2019"
                 ),
                 new NewsItem(
                         "Orci varius natoque penatibus et magnis dis parturient montes",
                         "Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus",
                         "Nunc mattis tempor mauris et hendrerit. Nunc condimentum massa at tellus sollicitudin lobortis. Nunc luctus sapien ut dui ullamcorper, eu dictum diam viverra. Morbi finibus tristique urna vitae malesuada. Sed dignissim posuere magna id dictum. Sed scelerisque tempor velit, id euismod lectus accumsan in.",
-                        "13-3-2019"
+                        "20-3-2019"
                 ),
                 new NewsItem(
                         "Vestibulum gravida",
                         "Vestibulum gravida, mauris sit amet posuere luctus, mi nisl ultrices lectus, porttitor faucibus dui libero eu mauris",
                         "Vivamus malesuada commodo leo, eget faucibus lacus faucibus ut. Maecenas pretium, sapien ut hendrerit egestas, orci enim hendrerit quam, sed pellentesque purus massa aliquet mauris. Cras consequat odio egestas pellentesque tempus. Nam id venenatis ipsum, malesuada blandit felis. Etiam in dui quis nibh sodales dapibus. Curabitur nec ligula vitae nunc blandit finibus non sit amet tortor. Suspendisse congue gravida purus. Nulla quam diam, ultrices ac quam sed, interdum dignissim ex. Morbi consequat mi eros, vitae lobortis elit efficitur et. Integer magna mauris, aliquam et vestibulum nec, semper sit amet eros. Duis porttitor justo quis tortor tristique, vel varius turpis consequat. Suspendisse non leo vel felis dapibus finibus ut at urna. Nam non porttitor dolor. Integer aliquam vel orci vitae maximus. Duis eget consectetur mauris.",
-                        "12-3-2019"
+                        "20-3-2019"
                 ),
                 new NewsItem(
                         "Praesent ipsum leo",
                         "Praesent ipsum leo, imperdiet sed tincidunt non, ultricies condimentum odio",
                         "Curabitur iaculis felis non egestas fermentum. Proin non tortor sed ante congue rhoncus. In varius nec magna quis eleifend. Pellentesque semper convallis quam eget elementum. Fusce tincidunt vitae felis ut lobortis. Nullam nec ex congue, sodales est ut, iaculis massa. Nam eleifend finibus tortor. Fusce nec lacinia tortor. Donec fringilla sagittis felis, vitae efficitur turpis blandit vel. Etiam quis ullamcorper mi. Praesent sit amet feugiat diam, eu lacinia magna.",
-                        "11-3-2018"
+                        "15-3-2018"
                 ),
                 new NewsItem(
                         "Morbi id dapibus metus",
