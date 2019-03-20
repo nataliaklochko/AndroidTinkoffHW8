@@ -16,12 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context context;
-    private ArrayList<RecyclerViewItem> news;
+    private ArrayList<RecyclerViewItem> news = new ArrayList<RecyclerViewItem>();
     private LinearLayout newsItem;
 
-    public NewsAdapter(Context context, ArrayList<RecyclerViewItem> news) {
+    public NewsAdapter(Context context) {
         this.context = context;
-        this.news = news;
     }
 
     public void refreshData(ArrayList<RecyclerViewItem> newData){
@@ -38,7 +37,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 View view = LayoutInflater.from(context).inflate(R.layout.news, parent, false);
                 final NewsViewHolder newsViewHolder = new NewsViewHolder(view);
 
-                final NewsViewModel newsViewModel = MainActivity.newsViewModel;
+                final NewsViewModel newsViewModel = NewsPageFragment.newsViewModel;
                 newsItem = newsViewHolder.newsItem;
 
                 newsItem.setOnClickListener(new View.OnClickListener() {

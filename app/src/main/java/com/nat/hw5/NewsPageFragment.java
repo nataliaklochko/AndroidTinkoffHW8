@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,15 +24,28 @@ public class NewsPageFragment extends Fragment {
     public static final String NEWS_ARG = "ITEMS_ARG";
     public static final String DEL_ARG = "DEL_ARG";
 
+    public static final String LAST = "last";
+    public static final String FAV = "favourites";
+
+    public static NewsViewModel newsViewModel;
+
 
     private RecyclerView recyclerView;
     private NewsAdapter newsAdapter;
     private ArrayList<RecyclerViewItem> news;
 
+    private Observer<List<NewsItem>> observer = new Observer<List<NewsItem>>() {
+        @Override
+        public void onChanged(List<NewsItem> newsItems) {
+            news = Utils.prepareData(newsItems);
+            newsAdapter.refreshData(news);
+        }
+    };
 
-    public static NewsPageFragment newInstance(ArrayList<RecyclerViewItem> listItems, boolean deletable) {
+
+    public static NewsPageFragment newInstance(String last, boolean deletable) {
         Bundle args = new Bundle();
-        args.putParcelableArrayList(NEWS_ARG, listItems);
+        args.putString(NEWS_ARG, last);
         args.putBoolean(DEL_ARG, deletable);
         NewsPageFragment fragment = new NewsPageFragment();
         fragment.setArguments(args);
@@ -44,6 +59,12 @@ public class NewsPageFragment extends Fragment {
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
+            if (getArguments().getString(NEWS_ARG) == LAST) {
+                newsViewModel.getAllNews().observe(this, observer);
+            } else {
+                newsViewModel.getAllFavouritesNews().observe(this, observer);
+            }
             news = getArguments().getParcelableArrayList(NEWS_ARG);
         }
         setRetainInstance(true);
@@ -61,10 +82,8 @@ public class NewsPageFragment extends Fragment {
         );
 
         recyclerView.setLayoutManager(linearLayoutManager);
-        newsAdapter = new NewsAdapter(getContext(), news);
+        newsAdapter = new NewsAdapter(getContext());
         recyclerView.setAdapter(newsAdapter);
-
-        final NewsViewModel newsViewModel = MainActivity.newsViewModel;
 
         if (getArguments().getBoolean(DEL_ARG)) {
 

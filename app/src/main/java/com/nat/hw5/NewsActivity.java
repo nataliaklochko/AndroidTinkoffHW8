@@ -34,7 +34,7 @@ public class NewsActivity extends AppCompatActivity {
                 starBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity.newsViewModel.insertFavourites(new FavouritesNews(newsItem.getId()));
+                        NewsPageFragment.newsViewModel.insertFavourites(new FavouritesNews(newsItem.getId()));
                         Toast.makeText(NewsActivity.this, R.string.favourites_msg, Toast.LENGTH_SHORT).show();
                         starBtn.setVisibility(ImageButton.INVISIBLE);
                     }
