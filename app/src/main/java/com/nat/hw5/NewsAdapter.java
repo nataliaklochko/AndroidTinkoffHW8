@@ -1,4 +1,4 @@
-package com.nat.hw4;
+package com.nat.hw5;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,18 +12,19 @@ import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context context;
-    private ArrayList<ListItem> news;
+    private ArrayList<RecyclerViewItem> news;
     private LinearLayout newsItem;
 
-    public NewsAdapter(Context context, ArrayList<ListItem> news) {
+    public NewsAdapter(Context context, ArrayList<RecyclerViewItem> news) {
         this.context = context;
         this.news = news;
     }
 
-    public void refreshData(ArrayList<ListItem> newData){
+    public void refreshData(ArrayList<RecyclerViewItem> newData){
         news.clear();
         news = newData;
         notifyDataSetChanged();
@@ -33,24 +34,33 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @NonNull
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
-            case ListItem.TYPE_NEWS: {
+            case RecyclerViewItem.TYPE_NEWS: {
                 View view = LayoutInflater.from(context).inflate(R.layout.news, parent, false);
                 final NewsViewHolder newsViewHolder = new NewsViewHolder(view);
+
+                final NewsViewModel newsViewModel = MainActivity.newsViewModel;
                 newsItem = newsViewHolder.newsItem;
+
                 newsItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(context, NewsActivity.class);
+
                         int pos = newsViewHolder.getAdapterPosition();
                         if (pos != RecyclerView.NO_POSITION) {
+                            NewsItem newsItemPos = (NewsItem) news.get(pos);
+                            boolean last = (newsViewModel.getFavouriteNews(newsItemPos.getId()) == null);
+
                             intent.putExtra(NewsActivity.NEWS_TAG, news.get(pos));
+                            intent.putExtra(NewsActivity.LAST_TAG, last);
                             context.startActivity(intent);
                         }
                     }
                 });
+
                 return newsViewHolder;
             }
-            case ListItem.TYPE_DATE: {
+            case RecyclerViewItem.TYPE_DATE: {
                 View view = LayoutInflater.from(context).inflate(R.layout.date, parent, false);
                 return new DateViewHolder(view);
             }
@@ -65,14 +75,14 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         int viewType = getItemViewType(position);
         switch (viewType) {
-            case ListItem.TYPE_NEWS: {
+            case RecyclerViewItem.TYPE_NEWS: {
                 NewsItem newsItem = (NewsItem) news.get(position);
                 NewsViewHolder vh = (NewsViewHolder) holder;
                 vh.textTitle.setText(newsItem.getTitle());
-                vh.textDesc.setText(newsItem.getDesc());
+                vh.textDesc.setText(newsItem.getDescription());
                 break;
             }
-            case ListItem.TYPE_DATE: {
+            case RecyclerViewItem.TYPE_DATE: {
                 DateItem date = (DateItem) news.get(position);
                 DateViewHolder vh = (DateViewHolder) holder;
                 vh.textDate.setText(date.getDate());
@@ -86,13 +96,17 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         return news.get(position) instanceof NewsItem
-                ? ListItem.TYPE_NEWS
-                : ListItem.TYPE_DATE;
+                ? RecyclerViewItem.TYPE_NEWS
+                : RecyclerViewItem.TYPE_DATE;
     }
 
     @Override
     public int getItemCount() {
         return news.size();
+    }
+
+    public NewsItem getNewsAt(int position) {
+        return (NewsItem) news.get(position);
     }
 
 }

@@ -1,11 +1,11 @@
-package com.nat.hw4;
+package com.nat.hw5;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-
 import androidx.recyclerview.widget.RecyclerView;
+
 
 public class NewsItemDecoration extends RecyclerView.ItemDecoration {
 
@@ -27,9 +27,7 @@ public class NewsItemDecoration extends RecyclerView.ItemDecoration {
             outRect.bottom = itemOffset;
             outRect.right = itemOffset;
             outRect.left = itemOffset;
-
     }
-
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {

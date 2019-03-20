@@ -1,10 +1,10 @@
-package com.nat.hw4;
+package com.nat.hw5;
 
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class DateItem extends ListItem {
+public class DateItem extends RecyclerViewItem {
 
     private String date;
 
@@ -18,14 +18,13 @@ public class DateItem extends ListItem {
         this.date = data[0];
     }
 
-
     public String getDate() {
         return date;
     }
 
     public int getType() {
         return TYPE_DATE;
-    }
+    };
 
     @Override
     public int describeContents() {

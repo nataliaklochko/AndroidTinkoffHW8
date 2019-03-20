@@ -1,4 +1,4 @@
-package com.nat.hw4;
+package com.nat.hw5;
 
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,7 +13,7 @@ public class NewsViewHolder extends RecyclerView.ViewHolder {
 
     NewsViewHolder(View newsView) {
         super(newsView);
-        newsItem = (LinearLayout) newsView.findViewById(R.id.news);
+        newsItem = (LinearLayout) newsView.findViewById(R.id.news_item);
         textTitle = newsView.findViewById(R.id.title);
         textDesc = newsView.findViewById(R.id.description);
     }

@@ -1,4 +1,4 @@
-package com.nat.hw4;
+package com.nat.hw5;
 
 import org.junit.Test;
 
