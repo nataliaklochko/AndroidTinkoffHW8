@@ -24,8 +24,12 @@ public class NewsRepository {
         newsDao = database.newsDao();
         favouritesNewsDao = database.favouritesNewsDao();
 
-        allNews = newsDao.getAllNews();
-        allFavouritesNews = newsDao.getAllFavouritesNews();
+        try {
+            allNews = new GetAllNewsAsyncTask(newsDao).execute().get();
+            allFavouritesNews = new GetAllFavouritesNewsAsyncTask(newsDao).execute().get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException();
+        }
     }
 
     public void insertFavourite(FavouritesNews favouritesNews) {
@@ -100,4 +104,32 @@ public class NewsRepository {
     }
 
 
+    private static class GetAllNewsAsyncTask extends AsyncTask<Void, Void, LiveData<List<NewsItem>>> {
+        private NewsDao newsDao;
+
+        private GetAllNewsAsyncTask(NewsDao newsDao) {
+            this.newsDao = newsDao;
+        }
+
+        @Override
+        protected LiveData<List<NewsItem>> doInBackground(Void... voids) {
+            LiveData<List<NewsItem>> news = newsDao.getAllNews();
+            return news;
+        }
+    }
+
+
+    private static class GetAllFavouritesNewsAsyncTask extends AsyncTask<Void, Void, LiveData<List<NewsItem>>> {
+        private NewsDao newsDao;
+
+        private GetAllFavouritesNewsAsyncTask(NewsDao newsDao) {
+            this.newsDao = newsDao;
+        }
+
+        @Override
+        protected LiveData<List<NewsItem>> doInBackground(Void... voids) {
+            LiveData<List<NewsItem>> favouritesNews = newsDao.getAllFavouritesNews();
+            return favouritesNews;
+        }
+    }
 }
