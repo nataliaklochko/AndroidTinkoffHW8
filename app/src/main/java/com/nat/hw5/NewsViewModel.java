@@ -2,6 +2,9 @@ package com.nat.hw5;
 
 import android.app.Application;
 
+import com.nat.hw5.database.FavouritesNews;
+import com.nat.hw5.database.NewsItem;
+
 import java.util.List;
 
 import androidx.annotation.NonNull;

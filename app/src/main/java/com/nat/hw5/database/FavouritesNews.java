@@ -1,4 +1,4 @@
-package com.nat.hw5;
+package com.nat.hw5.database;
 
 
 import android.os.Parcel;
@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey;
     tableName = "favourites_news_table",
     indices = { @Index("news_id") }
 )
-public class FavouritesNews extends RecyclerViewItem {
+public class FavouritesNews extends Item {
 
     @PrimaryKey(autoGenerate = true)
     private int id;

@@ -1,5 +1,9 @@
 package com.nat.hw5;
 
+import com.nat.hw5.database.DateItem;
+import com.nat.hw5.database.Item;
+import com.nat.hw5.database.NewsItem;
+
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.ParsePosition;
@@ -14,7 +18,7 @@ import java.util.Locale;
 
 public class Utils {
 
-    static protected String dateToStr(String d) {
+    static public String dateToStr(String d) {
         Locale russian = new Locale("ru");
         String[] months = {
                 "января", "февраля", "марта", "апреля", "мая", "июня",
@@ -42,7 +46,7 @@ public class Utils {
         }
     }
 
-    static protected ArrayList<RecyclerViewItem> prepareData(List<NewsItem> data) {
+    static public ArrayList<Item> prepareData(List<NewsItem> data) {
         HashMap<String, List<NewsItem>> newsHM = new HashMap<String, List<NewsItem>>();
         for (NewsItem newsItem : data) {
             String date = newsItem.getDate();
@@ -61,7 +65,7 @@ public class Utils {
             dates.add(dateFormat.parse(dateStr, new ParsePosition(0)));
         }
 
-        ArrayList<RecyclerViewItem> itemList = new ArrayList<>();
+        ArrayList<Item> itemList = new ArrayList<>();
         List<NewsItem> newsItemList;
         Collections.sort(dates, Collections.reverseOrder());
 

@@ -1,4 +1,4 @@
-package com.nat.hw5;
+package com.nat.hw5.database;
 
 import android.content.Context;
 import android.os.AsyncTask;

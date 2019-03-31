@@ -1,4 +1,4 @@
-package com.nat.hw5;
+package com.nat.hw5.recycler_view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import com.nat.hw5.NewsActivity;
+import com.nat.hw5.NewsPageFragment;
+import com.nat.hw5.NewsViewModel;
+import com.nat.hw5.R;
+import com.nat.hw5.database.DateItem;
+import com.nat.hw5.database.NewsItem;
+import com.nat.hw5.database.Item;
 
 import java.util.ArrayList;
 
@@ -16,14 +24,14 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Context context;
-    private ArrayList<RecyclerViewItem> news = new ArrayList<RecyclerViewItem>();
+    private ArrayList<Item> news = new ArrayList<Item>();
     private LinearLayout newsItem;
 
     public NewsAdapter(Context context) {
         this.context = context;
     }
 
-    public void refreshData(ArrayList<RecyclerViewItem> newData){
+    public void refreshData(ArrayList<Item> newData){
         news.clear();
         news = newData;
         notifyDataSetChanged();
@@ -33,7 +41,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @NonNull
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType) {
-            case RecyclerViewItem.TYPE_NEWS: {
+            case Item.TYPE_NEWS: {
                 View view = LayoutInflater.from(context).inflate(R.layout.news, parent, false);
                 final NewsViewHolder newsViewHolder = new NewsViewHolder(view);
 
@@ -57,7 +65,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
                 return newsViewHolder;
             }
-            case RecyclerViewItem.TYPE_DATE: {
+            case Item.TYPE_DATE: {
                 View view = LayoutInflater.from(context).inflate(R.layout.date, parent, false);
                 return new DateViewHolder(view);
             }
@@ -72,14 +80,14 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         int viewType = getItemViewType(position);
         switch (viewType) {
-            case RecyclerViewItem.TYPE_NEWS: {
+            case Item.TYPE_NEWS: {
                 NewsItem newsItem = (NewsItem) news.get(position);
                 NewsViewHolder vh = (NewsViewHolder) holder;
                 vh.textTitle.setText(newsItem.getTitle());
                 vh.textDesc.setText(newsItem.getDescription());
                 break;
             }
-            case RecyclerViewItem.TYPE_DATE: {
+            case Item.TYPE_DATE: {
                 DateItem date = (DateItem) news.get(position);
                 DateViewHolder vh = (DateViewHolder) holder;
                 vh.textDate.setText(date.getDate());
@@ -93,8 +101,8 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         return news.get(position) instanceof NewsItem
-                ? RecyclerViewItem.TYPE_NEWS
-                : RecyclerViewItem.TYPE_DATE;
+                ? Item.TYPE_NEWS
+                : Item.TYPE_DATE;
     }
 
     @Override

@@ -3,6 +3,12 @@ package com.nat.hw5;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import com.nat.hw5.database.FavouritesNews;
+import com.nat.hw5.database.FavouritesNewsDao;
+import com.nat.hw5.database.NewsDao;
+import com.nat.hw5.database.NewsDatabase;
+import com.nat.hw5.database.NewsItem;
+
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 

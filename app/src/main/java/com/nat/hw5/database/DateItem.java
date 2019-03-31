@@ -1,10 +1,10 @@
-package com.nat.hw5;
+package com.nat.hw5.database;
 
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class DateItem extends RecyclerViewItem {
+public class DateItem extends Item {
 
     private String date;
 

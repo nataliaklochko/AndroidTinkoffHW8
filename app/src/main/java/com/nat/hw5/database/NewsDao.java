@@ -1,4 +1,4 @@
-package com.nat.hw5;
+package com.nat.hw5.database;
 
 import java.util.List;
 

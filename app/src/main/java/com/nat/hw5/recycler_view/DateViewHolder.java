@@ -1,8 +1,10 @@
-package com.nat.hw5;
+package com.nat.hw5.recycler_view;
 
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.nat.hw5.R;
 
 import androidx.recyclerview.widget.RecyclerView;
 

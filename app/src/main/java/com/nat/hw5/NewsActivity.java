@@ -8,6 +8,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nat.hw5.database.FavouritesNews;
+import com.nat.hw5.database.NewsItem;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import static com.nat.hw5.NewsPageFragment.newsViewModel;

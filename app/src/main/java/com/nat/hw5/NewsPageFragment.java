@@ -9,6 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.nat.hw5.database.NewsItem;
+import com.nat.hw5.database.Item;
+import com.nat.hw5.recycler_view.NewsAdapter;
+import com.nat.hw5.recycler_view.NewsItemDecoration;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +38,7 @@ public class NewsPageFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private RecyclerView recyclerView;
     private NewsAdapter newsAdapter;
-    private ArrayList<RecyclerViewItem> news;
+    private ArrayList<Item> news;
 
     private Observer<List<NewsItem>> observer = new Observer<List<NewsItem>>() {
         @Override

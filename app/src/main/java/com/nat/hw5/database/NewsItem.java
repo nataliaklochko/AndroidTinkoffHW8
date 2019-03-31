@@ -1,4 +1,4 @@
-package com.nat.hw5;
+package com.nat.hw5.database;
 
 
 import android.os.Parcel;
@@ -15,7 +15,7 @@ import androidx.room.PrimaryKey;
      tableName = "news_table",
      indices = { @Index("id") }
 )
-public class NewsItem extends RecyclerViewItem {
+public class NewsItem extends Item {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
