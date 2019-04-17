@@ -1,4 +1,4 @@
-package com.nat.hw5.database;
+package com.nat.hw6.database;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -10,6 +10,8 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 
 
 @Database(entities = { NewsItem.class, FavouritesNews.class }, version = 1, exportSchema = false)
@@ -26,15 +28,13 @@ public abstract class NewsDatabase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            new PopulateDbAsyncTask(instance).execute();
+            populateDb();
         }
     };
 
-    private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        private final NewsDao newsDao;
-        private SimpleDateFormat dateFormat = new SimpleDateFormat("d-M-yyyy");
-        private NewsItem[] newsItemList = {
+    private static void populateDb() {
+        final NewsDao newsDao = instance.newsDao();;
+        NewsItem[] newsItemList = {
                 new NewsItem(
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
                         "Phasellus placerat viverra auctor. Duis laoreet mi eget elit efficitur, ac hendrerit justo ultrices. Pellentesque ornare, risus at pellentesque pharetra, est dui efficitur lorem, id ornare nulla orci nec leo",
@@ -84,18 +84,11 @@ public abstract class NewsDatabase extends RoomDatabase {
                         "1-3-2018"
                 )
         };
-
-        private PopulateDbAsyncTask(NewsDatabase db) {
-            newsDao = db.newsDao();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            for (NewsItem newsItem : newsItemList) {
-                newsDao.insert(newsItem);
-            }
-            return null;
-        }
+        Single.just(newsItemList)
+                .observeOn(Schedulers.io())
+                .subscribe(value -> {
+                    newsDao.insert(value);
+                });
     }
 
     public static NewsDatabase getInstance(Context context) {

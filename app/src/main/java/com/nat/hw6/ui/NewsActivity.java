@@ -1,4 +1,4 @@
-package com.nat.hw5;
+package com.nat.hw6.ui;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -8,25 +8,27 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nat.hw5.database.FavouritesNews;
-import com.nat.hw5.database.NewsItem;
+import com.nat.hw6.NewsViewModel;
+import com.nat.hw6.R;
+import com.nat.hw6.database.FavouritesNews;
+import com.nat.hw6.database.NewsItem;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import static com.nat.hw5.NewsPageFragment.newsViewModel;
+import androidx.lifecycle.Observer;
 
 
 public class NewsActivity extends AppCompatActivity {
 
     public static final String NEWS_TAG = "news";
     private static final String NEW_USER = "new_user_news_activity";
-    private boolean fav;
+    private Boolean fav;
     private TextView title;
     private TextView content;
     private TextView date;
     private ImageButton starBtn;
     private SharedPreferences sharedPreferences;
-
+    private NewsItem newsItem;
+    private NewsViewModel newsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +36,16 @@ public class NewsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_news);
 
+        Bundle intent = getIntent().getExtras();
+        newsItem = intent.getParcelable(NEWS_TAG);
+        newsViewModel = new NewsViewModel(getApplication());
+        starBtn = (ImageButton) findViewById(R.id.star_btn);
+
+        newsViewModel.isFavorite(newsItem.getId()).observe(this, observer);
+    }
+
+    private void refreshActivity(Boolean fav) {
         try {
-            Bundle intent = getIntent().getExtras();
-            final NewsItem newsItem = intent.getParcelable(NEWS_TAG);
-
-            fav = (newsViewModel.getFavouriteNews(newsItem.getId()) == null);
-            starBtn = (ImageButton) findViewById(R.id.star_btn);
-
             if (fav) {
                 starBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -76,5 +81,14 @@ public class NewsActivity extends AppCompatActivity {
             throw new NullPointerException("Новость не отображена");
         }
     }
+
+    private Observer<Boolean> observer = new Observer<Boolean>() {
+        @Override
+        public void onChanged(Boolean favValue) {
+            fav = favValue;
+            refreshActivity(fav);
+        }
+
+    };
 
 }

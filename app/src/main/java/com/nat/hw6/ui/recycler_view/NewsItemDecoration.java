@@ -1,4 +1,4 @@
-package com.nat.hw5.recycler_view;
+package com.nat.hw6.ui.recycler_view;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;

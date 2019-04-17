@@ -1,10 +1,11 @@
-package com.nat.hw5;
+package com.nat.hw6.ui;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import com.google.android.material.tabs.TabLayout;
+import com.nat.hw6.R;
 
 
 public class MainActivity extends AppCompatActivity {

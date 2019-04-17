@@ -1,8 +1,8 @@
-package com.nat.hw5;
+package com.nat.hw6.ui;
 
-import com.nat.hw5.database.DateItem;
-import com.nat.hw5.database.Item;
-import com.nat.hw5.database.NewsItem;
+import com.nat.hw6.database.DateItem;
+import com.nat.hw6.database.Item;
+import com.nat.hw6.database.NewsItem;
 
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;

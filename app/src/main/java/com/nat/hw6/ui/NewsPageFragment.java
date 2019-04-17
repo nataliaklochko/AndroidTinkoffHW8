@@ -1,4 +1,4 @@
-package com.nat.hw5;
+package com.nat.hw6.ui;
 
 
 import android.content.Context;
@@ -9,10 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.nat.hw5.database.NewsItem;
-import com.nat.hw5.database.Item;
-import com.nat.hw5.recycler_view.NewsAdapter;
-import com.nat.hw5.recycler_view.NewsItemDecoration;
+import com.nat.hw6.NewsViewModel;
+import com.nat.hw6.R;
+import com.nat.hw6.database.NewsItem;
+import com.nat.hw6.database.Item;
+import com.nat.hw6.ui.recycler_view.NewsAdapter;
+import com.nat.hw6.ui.recycler_view.NewsItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,25 +30,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 public class NewsPageFragment extends Fragment {
-    public static final String NEWS_ARG = "ITEMS_ARG";
-    public static final String DEL_ARG = "DEL_ARG";
+    public static final String NEWS_ARG = "items_arg";
+    public static final String DEL_ARG = "del_arg";
     private static final String NEW_USER = "new_user_fragment";
 
     public static NewsViewModel newsViewModel;
-
 
     private SharedPreferences sharedPreferences;
     private RecyclerView recyclerView;
     private NewsAdapter newsAdapter;
     private ArrayList<Item> news;
-
-    private Observer<List<NewsItem>> observer = new Observer<List<NewsItem>>() {
-        @Override
-        public void onChanged(List<NewsItem> newsItems) {
-            news = Utils.prepareData(newsItems);
-            newsAdapter.refreshData(news);
-        }
-    };
 
 
     public static NewsPageFragment newInstance(boolean last, boolean deletable) {
@@ -117,8 +110,15 @@ public class NewsPageFragment extends Fragment {
                 }
             }).attachToRecyclerView(recyclerView);
         }
-
         return view;
     }
+
+    private Observer<List<NewsItem>> observer = new Observer<List<NewsItem>>() {
+        @Override
+        public void onChanged(List<NewsItem> newsItems) {
+            news = Utils.prepareData(newsItems);
+            newsAdapter.refreshData(news);
+        }
+    };
 
 }

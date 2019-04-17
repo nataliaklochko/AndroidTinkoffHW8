@@ -1,10 +1,12 @@
-package com.nat.hw5.database;
+package com.nat.hw6.database;
 
 
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import io.reactivex.Maybe;
+import io.reactivex.Single;
 
 
 import static androidx.room.OnConflictStrategy.REPLACE;
@@ -22,6 +24,6 @@ public interface FavouritesNewsDao {
     void delete(int newsIdToDelete);
 
     @Query("SELECT * FROM favourites_news_table WHERE news_id=:idToSelect")
-    FavouritesNews select(int idToSelect);
+    Maybe<FavouritesNews> select(int idToSelect);
 
 }

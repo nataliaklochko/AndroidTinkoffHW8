@@ -1,4 +1,4 @@
-package com.nat.hw5.recycler_view;
+package com.nat.hw6.ui.recycler_view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.nat.hw5.NewsActivity;
-import com.nat.hw5.NewsPageFragment;
-import com.nat.hw5.NewsViewModel;
-import com.nat.hw5.R;
-import com.nat.hw5.database.DateItem;
-import com.nat.hw5.database.NewsItem;
-import com.nat.hw5.database.Item;
+import com.nat.hw6.ui.NewsActivity;
+import com.nat.hw6.ui.NewsPageFragment;
+import com.nat.hw6.NewsViewModel;
+import com.nat.hw6.R;
+import com.nat.hw6.database.DateItem;
+import com.nat.hw6.database.NewsItem;
+import com.nat.hw6.database.Item;
 
 import java.util.ArrayList;
 

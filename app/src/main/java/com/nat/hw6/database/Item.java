@@ -1,4 +1,4 @@
-package com.nat.hw5.database;
+package com.nat.hw6.database;
 
 import android.os.Parcelable;
 
