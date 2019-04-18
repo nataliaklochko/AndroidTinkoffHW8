@@ -97,10 +97,18 @@ public class NewsPageFragment extends Fragment {
 
         if (getArguments().getBoolean(DEL_ARG)) {
 
-            new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
                 @Override
                 public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                     return false;
+                }
+
+                @Override
+                public int getSwipeDirs(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                    if (newsAdapter.getItemViewType(viewHolder.getAdapterPosition()) == Item.TYPE_DATE) {
+                        return 0;
+                    }
+                    return super.getSwipeDirs(recyclerView, viewHolder);
                 }
 
                 @Override
@@ -108,7 +116,9 @@ public class NewsPageFragment extends Fragment {
                     int newsIdToDelete = newsAdapter.getNewsAt(viewHolder.getAdapterPosition()).getId();
                     newsViewModel.deleteFavourite(newsIdToDelete);
                 }
-            }).attachToRecyclerView(recyclerView);
+            });
+
+            itemTouchHelper.attachToRecyclerView(recyclerView);
         }
         return view;
     }

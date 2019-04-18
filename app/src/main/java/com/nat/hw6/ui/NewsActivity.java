@@ -15,6 +15,7 @@ import com.nat.hw6.database.NewsItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 
 public class NewsActivity extends AppCompatActivity {
@@ -38,7 +39,9 @@ public class NewsActivity extends AppCompatActivity {
 
         Bundle intent = getIntent().getExtras();
         newsItem = intent.getParcelable(NEWS_TAG);
-        newsViewModel = new NewsViewModel(getApplication());
+
+        newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
+
         starBtn = (ImageButton) findViewById(R.id.star_btn);
 
         newsViewModel.isFavorite(newsItem.getId()).observe(this, observer);
