@@ -1,4 +1,4 @@
-package com.nat.hw6.database;
+package com.nat.hw8.database;
 
 
 import android.os.Parcel;
@@ -20,17 +20,17 @@ public class FavouritesNews extends Item {
     private int id;
 
     @ColumnInfo(name = "news_id")
-    private int newsId;
+    private String newsId;
 
-    public FavouritesNews(int newsId) {
+    public FavouritesNews(String newsId) {
         this.newsId = newsId;
     }
 
 
     public FavouritesNews(Parcel in) {
-        int[] data = new int[2];
-        in.readIntArray(data);
-        this.id = data[0];
+        String[] data = new String[2];
+        in.readStringArray(data);
+        this.id = Integer.valueOf(data[0]);
         this.newsId = data[1];
     }
 
@@ -48,7 +48,7 @@ public class FavouritesNews extends Item {
         return id;
     }
 
-    public int getNewsId() {
+    public String getNewsId() {
         return newsId;
     }
 
@@ -59,7 +59,7 @@ public class FavouritesNews extends Item {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeIntArray(new int[] { id, newsId });
+        dest.writeStringArray(new String[] { String.valueOf(id), newsId });
     }
 
     public static final Parcelable.Creator<FavouritesNews> CREATOR = new Parcelable.Creator<FavouritesNews>() {

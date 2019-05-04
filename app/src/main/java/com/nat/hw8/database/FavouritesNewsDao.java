@@ -1,4 +1,4 @@
-package com.nat.hw6.database;
+package com.nat.hw8.database;
 
 
 import androidx.room.Dao;
@@ -6,7 +6,6 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import io.reactivex.Maybe;
-import io.reactivex.Single;
 
 
 import static androidx.room.OnConflictStrategy.REPLACE;
@@ -21,9 +20,9 @@ public interface FavouritesNewsDao {
     void delete(FavouritesNews news);
 
     @Query("DELETE FROM favourites_news_table WHERE news_id=:newsIdToDelete")
-    void delete(int newsIdToDelete);
+    void delete(String newsIdToDelete);
 
     @Query("SELECT * FROM favourites_news_table WHERE news_id=:idToSelect")
-    Maybe<FavouritesNews> select(int idToSelect);
+    Maybe<FavouritesNews> select(String idToSelect);
 
 }

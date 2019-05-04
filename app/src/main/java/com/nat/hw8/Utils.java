@@ -1,8 +1,15 @@
-package com.nat.hw6.ui;
+package com.nat.hw8;
 
-import com.nat.hw6.database.DateItem;
-import com.nat.hw6.database.Item;
-import com.nat.hw6.database.NewsItem;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
+import com.nat.hw8.database.DateItem;
+import com.nat.hw8.database.Item;
+import com.nat.hw8.database.NewsItem;
+import com.nat.hw8.retrofit.NewsItemRetrofit;
+import com.nat.hw8.retrofit.NewsListRetrofit;
+import com.nat.hw8.retrofit.ResponsePayload;
 
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
@@ -78,5 +85,39 @@ public class Utils {
         return itemList;
     }
 
+    static private String mlsToDate(long mls) {
+        Date date = new Date(mls);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("d-M-yyyy");
+        return dateFormat.format(date);
+    }
+
+    static NewsItem retrofitToRoomNewsModel(NewsListRetrofit retrofitNewsItem) {
+        NewsItem newsItem = new NewsItem(
+                    retrofitNewsItem.getId(),
+                    retrofitNewsItem.getText(),
+                    "",
+                    mlsToDate(retrofitNewsItem.getPublicationMsDate().getMilliseconds())
+        );
+        return newsItem;
+    }
+
+    public static String getPayloadContent(ResponsePayload<NewsItemRetrofit> responsePayload) {
+        NewsItemRetrofit newsItemRetrofit = responsePayload.getPayload();
+        String content = newsItemRetrofit.getContent();
+        return content;
+    }
+
+    public static NewsItem updateNewsItemContent(NewsItem newsItem, ResponsePayload<NewsItemRetrofit> responsePayload) {
+        NewsItemRetrofit newsItemRetrofit = responsePayload.getPayload();
+        String content = newsItemRetrofit.getContent();
+        newsItem.setContent(content);
+        return newsItem;
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
+    }
 
 }

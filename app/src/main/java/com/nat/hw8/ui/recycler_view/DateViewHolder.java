@@ -1,10 +1,10 @@
-package com.nat.hw6.ui.recycler_view;
+package com.nat.hw8.ui.recycler_view;
 
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nat.hw6.R;
+import com.nat.hw8.R;
 
 import androidx.recyclerview.widget.RecyclerView;
 

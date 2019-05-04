@@ -1,12 +1,6 @@
-package com.nat.hw6;
+package com.nat.hw8.database;
 
 import android.app.Application;
-
-import com.nat.hw6.database.FavouritesNews;
-import com.nat.hw6.database.FavouritesNewsDao;
-import com.nat.hw6.database.NewsDao;
-import com.nat.hw6.database.NewsDatabase;
-import com.nat.hw6.database.NewsItem;
 
 import java.util.List;
 
@@ -33,16 +27,24 @@ public class NewsRepository {
         return newsDao.getAllFavouritesNews();
     }
 
+    public void insertNewsItem(NewsItem newsItem) {
+        newsDao.insert(newsItem);
+    }
+
     public void insertFavourite(FavouritesNews favouritesNews) {
         favouritesNewsDao.insert(favouritesNews);
     }
 
-    public void deleteFavourite(int newsIdToDelete) {
+    public void deleteFavourite(String newsIdToDelete) {
         favouritesNewsDao.delete(newsIdToDelete);
     }
 
-    public Maybe<FavouritesNews> getFavouriteNews(int idToSelect) {
+    public Maybe<FavouritesNews> getFavouriteNews(String idToSelect) {
         return favouritesNewsDao.select(idToSelect);
+    }
+
+    public Maybe<NewsItem> getNewsItem(String idToSelect) {
+        return newsDao.select(idToSelect);
     }
 
 }

@@ -1,11 +1,15 @@
-package com.nat.hw6.ui;
+package com.nat.hw8.ui;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
+
 import android.os.Bundle;
+import android.widget.Toast;
+
 import com.google.android.material.tabs.TabLayout;
-import com.nat.hw6.R;
+import com.nat.hw8.R;
+import com.nat.hw8.Utils;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -15,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private  NewsPageFragment newsLastFragment;
     private static NewsPageFragment newsFavouritesFragment;
+
 
     protected static final String PREF = "settings";
 
@@ -38,6 +43,10 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_access_time);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_star);
 
+        if (!Utils.isNetworkAvailable(this)) {
+            Toast.makeText(this, R.string.networkIsNotAvailable, Toast.LENGTH_LONG).show();
+        }
     }
+
 }
 

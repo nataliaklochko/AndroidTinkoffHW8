@@ -1,4 +1,4 @@
-package com.nat.hw6.database;
+package com.nat.hw8.database;
 
 
 import android.os.Parcel;
@@ -17,33 +17,32 @@ import androidx.room.PrimaryKey;
 )
 public class NewsItem extends Item {
 
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+    @PrimaryKey
+    @NonNull
+    private String id;
 
-    private String title;
     private String description;
     private String content;
     private String date;
 
-    public NewsItem(String title, String description, String content, String date) {
-        this.title = title;
+    public NewsItem(String id, String description, String content, String date) {
+        this.id = id;
         this.description = description;
         this.content = content;
         this.date = date;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     public NewsItem(Parcel in) {
-        String[] data = new String[5];
+        String[] data = new String[4];
         in.readStringArray(data);
-        this.id = Integer.valueOf(data[0]);
-        this.title = data[1];
-        this.description = data[2];
-        this.date = data[3];
-        this.content = data[4];
+        this.id = data[0];
+        this.description = data[1];
+        this.date = data[2];
+        this.content = data[3];
     }
 
 
@@ -52,12 +51,8 @@ public class NewsItem extends Item {
         return TYPE_NEWS;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public String getDescription() {
@@ -72,24 +67,21 @@ public class NewsItem extends Item {
         return date;
     }
 
-
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     @Override
     public boolean equals(@Nullable Object obj) {
         NewsItem news = (NewsItem) obj;
-        return (
-                this.title.equals(news.title) &&
-                this.content.equals(news.content) &&
-                this.date.equals(news.date) &&
-                this.description.equals(news.description)
-        );
+        return this.id.equals(news.id);
     }
 
 
     @NonNull
     @Override
     public String toString() {
-        return String.format("№%d %s: %s(%s)", id, title, description, date);
+        return String.format("№%d: %s(%s)", id, description, date);
     }
 
     @Override
@@ -99,7 +91,7 @@ public class NewsItem extends Item {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[] { String.valueOf(id), title, description, date, content });
+        dest.writeStringArray(new String[]{ id, description, date, content });
     }
 
     public static final Parcelable.Creator<NewsItem> CREATOR = new Parcelable.Creator<NewsItem>() {

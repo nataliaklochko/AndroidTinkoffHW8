@@ -4,4 +4,5 @@
     <string name="already_in_favourites_msg">Новость уже была добавлена в избранное</string>
     <string name="instruction_star">Нажмите на ★ для добавления новости в избранное</string>
     <string name="instruction_swipe">Смахните влево для удаления новости из избранного</string>
+    <string name="networkIsNotAvailable">Отсутствует доступ к интернету</string>
 </resources>

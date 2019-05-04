@@ -1,7 +1,8 @@
-package com.nat.hw6.ui;
+package com.nat.hw8.ui;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,15 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.nat.hw6.NewsViewModel;
-import com.nat.hw6.R;
-import com.nat.hw6.database.NewsItem;
-import com.nat.hw6.database.Item;
-import com.nat.hw6.ui.recycler_view.NewsAdapter;
-import com.nat.hw6.ui.recycler_view.NewsItemDecoration;
+import com.nat.hw8.NewsViewModel;
+import com.nat.hw8.R;
+import com.nat.hw8.Utils;
+import com.nat.hw8.database.NewsItem;
+import com.nat.hw8.database.Item;
+import com.nat.hw8.ui.recycler_view.NewsActivityCallback;
+import com.nat.hw8.ui.recycler_view.NewsAdapter;
+import com.nat.hw8.ui.recycler_view.NewsItemDecoration;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -26,7 +28,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 public class NewsPageFragment extends Fragment {
@@ -34,12 +36,13 @@ public class NewsPageFragment extends Fragment {
     public static final String DEL_ARG = "del_arg";
     private static final String NEW_USER = "new_user_fragment";
 
-    public static NewsViewModel newsViewModel;
+    public NewsViewModel newsViewModel;
 
     private SharedPreferences sharedPreferences;
     private RecyclerView recyclerView;
     private NewsAdapter newsAdapter;
     private ArrayList<Item> news;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     public static NewsPageFragment newInstance(boolean last, boolean deletable) {
@@ -51,8 +54,10 @@ public class NewsPageFragment extends Fragment {
         return fragment;
     }
 
-    @Override public void onCreate(Bundle savedInstanceState) {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             newsViewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
             if (getArguments().getBoolean(NEWS_ARG)) {
@@ -60,7 +65,7 @@ public class NewsPageFragment extends Fragment {
             } else {
                 newsViewModel.getAllFavouritesNews().observe(this, observer);
             }
-            news = getArguments().getParcelableArrayList(NEWS_ARG);
+
         }
         setRetainInstance(true);
     }
@@ -87,12 +92,36 @@ public class NewsPageFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView = view.findViewById(R.id.recycler_view);
 
+        swipeRefreshLayout = view.findViewById(R.id.swipe_to_refresh_layout);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (!getArguments().getBoolean(DEL_ARG)) {
+                    if (!Utils.isNetworkAvailable(getContext())) {
+                        Toast.makeText(getContext(), R.string.networkIsNotAvailable, Toast.LENGTH_LONG).show();
+                    } else {
+                        newsViewModel.loadNews();
+                    }
+                }
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
         recyclerView.addItemDecoration(
                 new NewsItemDecoration(getResources().getDrawable(R.drawable.divider), 24, 48)
         );
 
         recyclerView.setLayoutManager(linearLayoutManager);
-        newsAdapter = new NewsAdapter(getContext());
+        newsAdapter = new NewsAdapter(new NewsActivityCallback() {
+            @Override
+            public void startNewsActivity(NewsItem newsItem) {
+                Context context = getContext();
+                Intent intent = new Intent(context, NewsActivity.class);
+                intent.putExtra(NewsActivity.NEWS_TAG, newsItem);
+                context.startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(newsAdapter);
 
         if (getArguments().getBoolean(DEL_ARG)) {
@@ -113,7 +142,7 @@ public class NewsPageFragment extends Fragment {
 
                 @Override
                 public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                    int newsIdToDelete = newsAdapter.getNewsAt(viewHolder.getAdapterPosition()).getId();
+                    String newsIdToDelete = newsAdapter.getNewsAt(viewHolder.getAdapterPosition()).getId();
                     newsViewModel.deleteFavourite(newsIdToDelete);
                 }
             });
@@ -123,11 +152,11 @@ public class NewsPageFragment extends Fragment {
         return view;
     }
 
-    private Observer<List<NewsItem>> observer = new Observer<List<NewsItem>>() {
+
+    private Observer<ArrayList<Item>> observer = new Observer<ArrayList<Item>>() {
         @Override
-        public void onChanged(List<NewsItem> newsItems) {
-            news = Utils.prepareData(newsItems);
-            newsAdapter.refreshData(news);
+        public void onChanged(ArrayList<Item> items) {
+            newsAdapter.refreshData(items);
         }
     };
 

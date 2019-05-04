@@ -1,19 +1,15 @@
-package com.nat.hw6.ui.recycler_view;
+package com.nat.hw8.ui.recycler_view;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.nat.hw6.ui.NewsActivity;
-import com.nat.hw6.ui.NewsPageFragment;
-import com.nat.hw6.NewsViewModel;
-import com.nat.hw6.R;
-import com.nat.hw6.database.DateItem;
-import com.nat.hw6.database.NewsItem;
-import com.nat.hw6.database.Item;
+import com.nat.hw8.R;
+import com.nat.hw8.database.DateItem;
+import com.nat.hw8.database.NewsItem;
+import com.nat.hw8.database.Item;
 
 import java.util.ArrayList;
 
@@ -23,15 +19,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    Context context;
     private ArrayList<Item> news = new ArrayList<Item>();
     private LinearLayout newsItem;
+    private NewsActivityCallback newsActivityCallback;
 
-    public NewsAdapter(Context context) {
-        this.context = context;
+    public NewsAdapter(NewsActivityCallback newsActivityCallback) {
+        this.newsActivityCallback = newsActivityCallback;
     }
 
-    public void refreshData(ArrayList<Item> newData){
+    public void refreshData(ArrayList<Item> newData) {
         news.clear();
         news = newData;
         notifyDataSetChanged();
@@ -40,25 +36,20 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     @NonNull
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        final Context context = parent.getContext();
         switch (viewType) {
             case Item.TYPE_NEWS: {
                 View view = LayoutInflater.from(context).inflate(R.layout.news, parent, false);
                 final NewsViewHolder newsViewHolder = new NewsViewHolder(view);
 
-                final NewsViewModel newsViewModel = NewsPageFragment.newsViewModel;
                 newsItem = newsViewHolder.newsItem;
-
                 newsItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(context, NewsActivity.class);
-
                         int pos = newsViewHolder.getAdapterPosition();
                         if (pos != RecyclerView.NO_POSITION) {
-                            NewsItem newsItemPos = (NewsItem) news.get(pos);
-
-                            intent.putExtra(NewsActivity.NEWS_TAG, news.get(pos));
-                            context.startActivity(intent);
+                            NewsItem item = (NewsItem) news.get(pos);
+                            newsActivityCallback.startNewsActivity(item);
                         }
                     }
                 });
@@ -83,7 +74,6 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case Item.TYPE_NEWS: {
                 NewsItem newsItem = (NewsItem) news.get(position);
                 NewsViewHolder vh = (NewsViewHolder) holder;
-                vh.textTitle.setText(newsItem.getTitle());
                 vh.textDesc.setText(newsItem.getDescription());
                 break;
             }
