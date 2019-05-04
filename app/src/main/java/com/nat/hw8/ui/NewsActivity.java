@@ -93,7 +93,7 @@ public class NewsActivity extends AppCompatActivity {
         content = (TextView) findViewById(R.id.news_activity_content);
         date = (TextView) findViewById(R.id.news_activity_date);
 
-        description.setText(newsItem.getDescription());
+        description.setText(Html.fromHtml(newsItem.getDescription(), Html.FROM_HTML_MODE_COMPACT));
         content.setText(Html.fromHtml(newsItem.getContent(), Html.FROM_HTML_MODE_COMPACT));
         date.setText(newsItem.getDate());
     }

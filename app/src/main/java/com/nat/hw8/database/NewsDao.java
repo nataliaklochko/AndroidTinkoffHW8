@@ -22,7 +22,7 @@ public interface NewsDao {
     void delete(NewsItem newsItem);
 
     @Query("DELETE FROM news_table WHERE id=:idToDelete")
-    void delete(int idToDelete);
+    void delete(String idToDelete);
 
     @Query("SELECT * FROM news_table WHERE id=:idToSelect")
     Maybe<NewsItem> select(String idToSelect);

@@ -10,6 +10,7 @@ import com.nat.hw8.retrofit.NewsRetrofit;
 import com.nat.hw8.retrofit.NewsService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -28,6 +29,7 @@ public class NewsViewModel extends AndroidViewModel {
     private LiveData<ArrayList<Item>> allNews;
     private LiveData<ArrayList<Item>> allFavouritesNews;
     private CompositeDisposable compositeDisposable;
+    private final int NEWS_SIZE = 100;
 
 
     public NewsViewModel(@NonNull Application application) {
@@ -38,6 +40,7 @@ public class NewsViewModel extends AndroidViewModel {
         repository = new NewsRepository(application);
 
         loadNews();
+        clearDbNews();
 
         allFavouritesNews = LiveDataReactiveStreams.fromPublisher(
                 repository.getAllFavouritesNews()
@@ -75,6 +78,27 @@ public class NewsViewModel extends AndroidViewModel {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
         );
+    }
+
+    private void clearDbNews() {
+        compositeDisposable.add(
+                repository
+                    .getAllNews()
+                    .map(newsItemList -> adjustDbSize(newsItemList))
+                    .subscribeOn(Schedulers.io())
+                    .subscribe()
+        );
+    }
+
+    private List<NewsItem> adjustDbSize(List<NewsItem> newsItemList) {
+        int newsListSize = newsItemList.size();
+        if (newsListSize > NEWS_SIZE) {
+            for (int i = NEWS_SIZE; i < newsListSize; i++) {
+                repository.deleteNewsItem(String.valueOf(i));
+            }
+            return newsItemList.subList(0, NEWS_SIZE);
+        }
+        return newsItemList;
     }
 
     public void insertFavourites(FavouritesNews favouritesNews) {

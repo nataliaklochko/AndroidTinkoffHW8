@@ -1,6 +1,7 @@
 package com.nat.hw8.ui.recycler_view;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +75,7 @@ public class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case Item.TYPE_NEWS: {
                 NewsItem newsItem = (NewsItem) news.get(position);
                 NewsViewHolder vh = (NewsViewHolder) holder;
-                vh.textDesc.setText(newsItem.getDescription());
+                vh.textDesc.setText(Html.fromHtml(newsItem.getDescription(), Html.FROM_HTML_MODE_COMPACT));
                 break;
             }
             case Item.TYPE_DATE: {
