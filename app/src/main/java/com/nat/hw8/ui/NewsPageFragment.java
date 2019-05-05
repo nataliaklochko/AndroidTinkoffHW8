@@ -41,7 +41,6 @@ public class NewsPageFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private RecyclerView recyclerView;
     private NewsAdapter newsAdapter;
-    private ArrayList<Item> news;
     private SwipeRefreshLayout swipeRefreshLayout;
 
 

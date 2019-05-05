@@ -1,9 +1,9 @@
 package com.nat.hw8.database;
 
+import com.nat.hw8.NewsApplication;
+
 import android.app.Application;
-
 import java.util.List;
-
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 
@@ -14,7 +14,7 @@ public class NewsRepository {
     private FavouritesNewsDao favouritesNewsDao;
 
     public NewsRepository(Application application) {
-        NewsDatabase database = NewsDatabase.getInstance(application);
+        NewsDatabase database = ((NewsApplication) application).getNewsDatabase();
         newsDao = database.newsDao();
         favouritesNewsDao = database.favouritesNewsDao();
     }

@@ -3,7 +3,6 @@ package com.nat.hw8.database;
 import java.util.List;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import io.reactivex.Flowable;
@@ -17,9 +16,6 @@ public interface NewsDao {
 
     @Insert(onConflict = REPLACE)
     void insert(NewsItem newsItem);
-
-    @Delete
-    void delete(NewsItem newsItem);
 
     @Query("DELETE FROM news_table WHERE id=:idToDelete")
     void delete(String idToDelete);

@@ -101,12 +101,6 @@ public class Utils {
         return newsItem;
     }
 
-    public static String getPayloadContent(ResponsePayload<NewsItemRetrofit> responsePayload) {
-        NewsItemRetrofit newsItemRetrofit = responsePayload.getPayload();
-        String content = newsItemRetrofit.getContent();
-        return content;
-    }
-
     public static NewsItem updateNewsItemContent(NewsItem newsItem, ResponsePayload<NewsItemRetrofit> responsePayload) {
         NewsItemRetrofit newsItemRetrofit = responsePayload.getPayload();
         String content = newsItemRetrofit.getContent();
