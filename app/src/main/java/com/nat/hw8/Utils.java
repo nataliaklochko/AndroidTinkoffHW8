@@ -1,6 +1,7 @@
 package com.nat.hw8;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -25,36 +26,52 @@ import java.util.Locale;
 
 public class Utils {
 
-    static public String dateToStr(String d) {
+    private static SimpleDateFormat dateFormat;
+    private static String today;
+    private static String yesterday;
+    private static String todayStr;
+    private static String yesterdayStr;
+    private static SimpleDateFormat sdf;
+
+    public static void initUtils(Context context) {
         Locale russian = new Locale("ru");
-        String[] months = {
-                "января", "февраля", "марта", "апреля", "мая", "июня",
-                "июля", "августа", "сентября", "октября", "ноября", "декабря"
-        };
-        SimpleDateFormat dateFormat = new SimpleDateFormat("d-M-yyyy");
-        String today = dateFormat.format(new Date());
-        String yesterday = dateFormat.format(new Date(System.currentTimeMillis() - 24*60*60*1000));
-
-
-        DateFormatSymbols dfs = DateFormatSymbols.getInstance(russian);
-        dfs.setMonths(months);
         DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, russian);
-        SimpleDateFormat sdf = (SimpleDateFormat) df;
+
+        Resources resources = context.getResources();
+        DateFormatSymbols dfs = DateFormatSymbols.getInstance(russian);
+        String[] months = resources.getStringArray(R.array.months);
+        dfs.setMonths(months);
+
+        sdf = (SimpleDateFormat) df;
         sdf.setDateFormatSymbols(dfs);
 
+        dateFormat = new SimpleDateFormat("d-M-yyyy");
+
+        today = dateFormat.format(new Date());
+        yesterday = dateFormat.format(new Date(System.currentTimeMillis() - 24*60*60*1000));
+        todayStr = resources.getString(R.string.today);
+        yesterdayStr = resources.getString(R.string.yesterday);
+    }
+
+    static public String dateToStr(String d) {
         if (d.equals(today)) {
-            return "Сегодня";
+            return todayStr;
         } else if (d.equals(yesterday)) {
-            return "Вчера";
+            return yesterdayStr;
         } else {
             Date formatedDate = dateFormat.parse(d, new ParsePosition(0));
-            String date = sdf.format(formatedDate);
-            return date;
+            return sdf.format(formatedDate);
         }
     }
 
     static public ArrayList<Item> prepareData(List<NewsItem> data) {
         HashMap<String, List<NewsItem>> newsHM = new HashMap<String, List<NewsItem>>();
+        ArrayList<Date> dates = new ArrayList<Date>();
+
+        ArrayList<Item> itemList = new ArrayList<>();
+        List<NewsItem> newsItemList;
+        String dateStr;
+
         for (NewsItem newsItem : data) {
             String date = newsItem.getDate();
             if (!newsHM.containsKey(date)) {
@@ -65,19 +82,15 @@ public class Utils {
                 newsHM.get(date).add(newsItem);
             }
         }
-        SimpleDateFormat dateFormat = new SimpleDateFormat("d-M-yyyy");
-        ArrayList<Date> dates = new ArrayList<Date>();
 
-        for (String dateStr : newsHM.keySet()) {
-            dates.add(dateFormat.parse(dateStr, new ParsePosition(0)));
+        for (String date : newsHM.keySet()) {
+            dates.add(dateFormat.parse(date, new ParsePosition(0)));
         }
 
-        ArrayList<Item> itemList = new ArrayList<>();
-        List<NewsItem> newsItemList;
         Collections.sort(dates, Collections.reverseOrder());
 
         for (Date date : dates) {
-            String dateStr = dateFormat.format(date);
+            dateStr = dateFormat.format(date);
             itemList.add(new DateItem(dateToStr(dateStr)));
             newsItemList = newsHM.get(dateStr);
             itemList.addAll(newsItemList);
@@ -87,7 +100,6 @@ public class Utils {
 
     static private String mlsToDate(long mls) {
         Date date = new Date(mls);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("d-M-yyyy");
         return dateFormat.format(date);
     }
 

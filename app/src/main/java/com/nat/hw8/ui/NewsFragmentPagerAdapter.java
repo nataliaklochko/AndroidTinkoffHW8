@@ -9,12 +9,21 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 
 public class NewsFragmentPagerAdapter extends FragmentPagerAdapter {
-    final int PAGE_COUNT = 2;
+    private static final int PAGE_COUNT = 2;
+
+    private static NewsPageFragment newsLastFragment;
+    private static NewsPageFragment newsFavouritesFragment;
+
     private ArrayList<String> tabTitles = new ArrayList<String>();
-    private ArrayList<NewsPageFragment> news = new ArrayList<NewsPageFragment>();
+    private ArrayList<NewsPageFragment> newsFragments = new ArrayList<NewsPageFragment>();
 
     public NewsFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
+
+        newsLastFragment = NewsPageFragment.newInstance(true, false);
+        newsFavouritesFragment = NewsPageFragment.newInstance(false, true);
+        addFragment("", newsLastFragment);
+        addFragment("", newsFavouritesFragment);
     }
 
     @Override public int getCount() {
@@ -22,21 +31,16 @@ public class NewsFragmentPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override public Fragment getItem(int position) {
-        return news.get(position);
+        return newsFragments.get(position);
     }
 
     @Override public CharSequence getPageTitle(int position) {
         return tabTitles.get(position);
     }
 
-    @Override
-    public long getItemId(int position) {
-        return System.currentTimeMillis();
-    }
-
-    public void addFragment(String title, NewsPageFragment fragment) {
+    private void addFragment(String title, NewsPageFragment fragment) {
         tabTitles.add(title);
-        news.add(fragment);
+        newsFragments.add(fragment);
     }
 
 }

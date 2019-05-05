@@ -12,6 +12,7 @@ public class NewsApplication extends Application {
     public void onCreate() {
         super.onCreate();
         database = NewsDatabase.getInstance(this);
+        Utils.initUtils(this);
     }
 
     public NewsDatabase getNewsDatabase() {

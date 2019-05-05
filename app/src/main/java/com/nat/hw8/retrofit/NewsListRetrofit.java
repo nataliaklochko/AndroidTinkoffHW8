@@ -1,12 +1,17 @@
 package com.nat.hw8.retrofit;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class NewsListRetrofit {
 
+    @SerializedName("id")
     private String id;
 
+    @SerializedName("text")
     private String text;
 
+    @SerializedName("publicationDate")
     private PublicationDate publicationDate;
 
     public String getId(){

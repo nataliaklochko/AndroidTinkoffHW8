@@ -5,4 +5,24 @@
     <string name="instruction_star">Нажмите на ★ для добавления новости в избранное</string>
     <string name="instruction_swipe">Смахните влево для удаления новости из избранного</string>
     <string name="networkIsNotAvailable">Отсутствует доступ к интернету</string>
+
+    <string-array name="months">
+        <item>января</item>
+        <item>февраля</item>
+        <item>марта</item>
+        <item>апреля</item>
+        <item>мая</item>
+        <item>июня</item>
+        <item>июля</item>
+        <item>августа</item>
+        <item>сентября</item>
+        <item>октября</item>
+        <item>ноября</item>
+        <item>декабря</item>
+    </string-array>
+
+    <string name="today">Сегодня</string>
+    <string name="yesterday">Вчера</string>
+
+    <string name="base_url">https://api.tinkoff.ru</string>
 </resources>

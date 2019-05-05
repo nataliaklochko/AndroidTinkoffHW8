@@ -17,9 +17,6 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private NewsFragmentPagerAdapter fragmentPagerAdapter;
 
-    private  NewsPageFragment newsLastFragment;
-    private static NewsPageFragment newsFavouritesFragment;
-
 
     protected static final String PREF = "settings";
 
@@ -32,11 +29,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         fragmentPagerAdapter = new NewsFragmentPagerAdapter(getSupportFragmentManager());
-
-        newsLastFragment = NewsPageFragment.newInstance(true, false);
-        newsFavouritesFragment = NewsPageFragment.newInstance(false, true);
-        fragmentPagerAdapter.addFragment("", newsLastFragment);
-        fragmentPagerAdapter.addFragment("", newsFavouritesFragment);
 
         viewPager.setAdapter(fragmentPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

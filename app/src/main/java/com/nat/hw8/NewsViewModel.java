@@ -24,30 +24,27 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class NewsViewModel extends AndroidViewModel {
+
+    private final static int NEWS_SIZE = 100;
+
     private NewsRepository repository;
     private NewsService newsService;
-    private LiveData<ArrayList<Item>> allNews;
-    private LiveData<ArrayList<Item>> allFavouritesNews;
+    private static LiveData<ArrayList<Item>> allNews;
+    private static LiveData<ArrayList<Item>> allFavouritesNews;
     private CompositeDisposable compositeDisposable;
-    private final int NEWS_SIZE = 100;
 
 
     public NewsViewModel(@NonNull Application application) {
         super(application);
 
         compositeDisposable = new CompositeDisposable();
-        newsService = NewsRetrofit.getInstance().getNewsService();
+        newsService = NewsRetrofit.getInstance(application).getNewsService();
         repository = new NewsRepository(application);
 
-        loadNews();
-        clearDbNews();
-
-        allFavouritesNews = LiveDataReactiveStreams.fromPublisher(
-                repository.getAllFavouritesNews()
-                        .map(newsItemList -> Utils.prepareData(newsItemList))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-        );
+        if (allNews == null) {
+            loadNews();
+            clearDbNews();
+        }
     }
 
 
@@ -55,6 +52,7 @@ public class NewsViewModel extends AndroidViewModel {
         if (Utils.isNetworkAvailable(getApplication().getApplicationContext())) {
             allNews = LiveDataReactiveStreams.fromPublisher(
                     newsService.getNews()
+                            .toFlowable()
                             .flatMapIterable(payload -> payload.getPayload())
                             .map(itemList -> Utils.retrofitToRoomNewsModel(itemList))
                             .toList()
@@ -155,6 +153,7 @@ public class NewsViewModel extends AndroidViewModel {
                     newsService
                             .getNewsItem(newsItem.getId())
                             .map(payload -> Utils.updateNewsItemContent(newsItem, payload))
+                            .toFlowable()
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
             );

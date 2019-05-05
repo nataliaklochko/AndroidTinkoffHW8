@@ -36,7 +36,7 @@ public class NewsPageFragment extends Fragment {
     public static final String DEL_ARG = "del_arg";
     private static final String NEW_USER = "new_user_fragment";
 
-    public NewsViewModel newsViewModel;
+    private NewsViewModel newsViewModel;
 
     private SharedPreferences sharedPreferences;
     private RecyclerView recyclerView;
