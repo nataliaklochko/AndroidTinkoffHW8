@@ -26,7 +26,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class NewsViewModel extends AndroidViewModel {
 
-    private final static int NEWS_SIZE = 100;
+    public final static int NEWS_SIZE = 100;
 
     private NewsRepository repository;
     private NewsService newsService;
@@ -90,8 +90,7 @@ public class NewsViewModel extends AndroidViewModel {
     private Boolean adjustDbSize(List<NewsItem> newsItemList) {
         int newsListSize = newsItemList.size();
         if (newsListSize > NEWS_SIZE) {
-            int lenToDelete = newsListSize - NEWS_SIZE - 1;
-            repository.deleteNewsItems(lenToDelete);
+            repository.deleteNewsItems(NEWS_SIZE);
             return true;
         }
         return false;

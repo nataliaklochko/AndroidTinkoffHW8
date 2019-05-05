@@ -17,8 +17,8 @@ public interface NewsDao {
     @Insert(onConflict = REPLACE)
     void insert(NewsItem newsItem);
 
-    @Query("DELETE FROM news_table WHERE id IN (SELECT id from news_table ORDER BY date DESC LIMIT :lenToDelete)")
-    void delete(int lenToDelete);
+    @Query("DELETE FROM news_table WHERE id NOT IN (SELECT id from news_table ORDER BY date DESC LIMIT :lenToSave)")
+    void delete(int lenToSave);
 
     @Query("SELECT * FROM news_table WHERE id=:idToSelect")
     Maybe<NewsItem> select(String idToSelect);

@@ -27,8 +27,8 @@ public class NewsRepository {
         return newsDao.getAllFavouritesNews();
     }
 
-    public void deleteNewsItems(int lenToDelete) {
-        newsDao.delete(lenToDelete);
+    public void deleteNewsItems(int lenToSave) {
+        newsDao.delete(lenToSave);
     }
 
     public void insertNewsItem(NewsItem newsItem) {
