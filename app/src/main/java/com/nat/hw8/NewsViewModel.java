@@ -8,6 +8,7 @@ import com.nat.hw8.database.NewsItem;
 import com.nat.hw8.database.NewsRepository;
 import com.nat.hw8.retrofit.NewsRetrofit;
 import com.nat.hw8.retrofit.NewsService;
+import com.nat.hw8.retrofit.ResponsePayload;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,8 +30,8 @@ public class NewsViewModel extends AndroidViewModel {
 
     private NewsRepository repository;
     private NewsService newsService;
-    private static LiveData<ArrayList<Item>> allNews;
-    private static LiveData<ArrayList<Item>> allFavouritesNews;
+    private LiveData<ArrayList<Item>> allNews;
+    private LiveData<ArrayList<Item>> allFavouritesNews;
     private CompositeDisposable compositeDisposable;
 
 
@@ -47,13 +48,11 @@ public class NewsViewModel extends AndroidViewModel {
         }
     }
 
-
     public void loadNews() {
         if (Utils.isNetworkAvailable(getApplication().getApplicationContext())) {
             allNews = LiveDataReactiveStreams.fromPublisher(
                     newsService.getNews()
-                            .toFlowable()
-                            .flatMapIterable(payload -> payload.getPayload())
+                            .flattenAsFlowable(ResponsePayload::getPayload)
                             .map(itemList -> Utils.retrofitToRoomNewsModel(itemList))
                             .toList()
                             .map(newsItemList -> Utils.prepareData(newsItemList))
@@ -88,15 +87,14 @@ public class NewsViewModel extends AndroidViewModel {
         );
     }
 
-    private List<NewsItem> adjustDbSize(List<NewsItem> newsItemList) {
+    private Boolean adjustDbSize(List<NewsItem> newsItemList) {
         int newsListSize = newsItemList.size();
         if (newsListSize > NEWS_SIZE) {
-            for (int i = NEWS_SIZE; i < newsListSize; i++) {
-                repository.deleteNewsItem(String.valueOf(i));
-            }
-            return newsItemList.subList(0, NEWS_SIZE);
+            int lenToDelete = newsListSize - NEWS_SIZE - 1;
+            repository.deleteNewsItems(lenToDelete);
+            return true;
         }
-        return newsItemList;
+        return false;
     }
 
     public void insertFavourites(FavouritesNews favouritesNews) {

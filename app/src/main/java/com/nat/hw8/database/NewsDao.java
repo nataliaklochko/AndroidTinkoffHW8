@@ -17,13 +17,13 @@ public interface NewsDao {
     @Insert(onConflict = REPLACE)
     void insert(NewsItem newsItem);
 
-    @Query("DELETE FROM news_table WHERE id=:idToDelete")
-    void delete(String idToDelete);
+    @Query("DELETE FROM news_table WHERE id IN (SELECT id from news_table ORDER BY date DESC LIMIT :lenToDelete)")
+    void delete(int lenToDelete);
 
     @Query("SELECT * FROM news_table WHERE id=:idToSelect")
     Maybe<NewsItem> select(String idToSelect);
 
-    @Query("SELECT * FROM news_table ORDER BY date DESC")
+    @Query("SELECT * FROM news_table ORDER BY date")
     Flowable<List<NewsItem>> getAllNews();
 
     @Query("SELECT * FROM news_table WHERE id IN (SELECT news_id FROM favourites_news_table)")

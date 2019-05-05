@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.nat.hw8.NewsViewModel;
 import com.nat.hw8.R;
+import com.nat.hw8.Utils;
 import com.nat.hw8.database.FavouritesNews;
 import com.nat.hw8.database.NewsItem;
 
@@ -95,7 +96,7 @@ public class NewsActivity extends AppCompatActivity {
 
         description.setText(Html.fromHtml(newsItem.getDescription(), Html.FROM_HTML_MODE_COMPACT));
         content.setText(Html.fromHtml(newsItem.getContent(), Html.FROM_HTML_MODE_COMPACT));
-        date.setText(newsItem.getDate());
+        date.setText(Utils.mlsToDate(newsItem.getDate()));
     }
 
     private Observer<Boolean> observerFavourite = new Observer<Boolean>() {

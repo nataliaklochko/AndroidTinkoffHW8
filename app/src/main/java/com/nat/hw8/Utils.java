@@ -73,7 +73,7 @@ public class Utils {
         String dateStr;
 
         for (NewsItem newsItem : data) {
-            String date = newsItem.getDate();
+            String date = mlsToDate(newsItem.getDate());
             if (!newsHM.containsKey(date)) {
                 List<NewsItem> list = new ArrayList<>();
                 list.add(newsItem);
@@ -93,12 +93,14 @@ public class Utils {
             dateStr = dateFormat.format(date);
             itemList.add(new DateItem(dateToStr(dateStr)));
             newsItemList = newsHM.get(dateStr);
-            itemList.addAll(newsItemList);
+            if (newsItemList != null) {
+                itemList.addAll(newsItemList);
+            }
         }
         return itemList;
     }
 
-    static private String mlsToDate(long mls) {
+    public static String mlsToDate(long mls) {
         Date date = new Date(mls);
         return dateFormat.format(date);
     }
@@ -108,7 +110,7 @@ public class Utils {
                     retrofitNewsItem.getId(),
                     retrofitNewsItem.getText(),
                     "",
-                    mlsToDate(retrofitNewsItem.getPublicationMsDate().getMilliseconds())
+                    retrofitNewsItem.getPublicationMsDate().getMilliseconds()
         );
         return newsItem;
     }

@@ -64,7 +64,6 @@ public class NewsPageFragment extends Fragment {
             } else {
                 newsViewModel.getAllFavouritesNews().observe(this, observer);
             }
-
         }
         setRetainInstance(true);
     }
@@ -92,7 +91,6 @@ public class NewsPageFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
 
         swipeRefreshLayout = view.findViewById(R.id.swipe_to_refresh_layout);
-
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

@@ -23,9 +23,9 @@ public class NewsItem extends Item {
 
     private String description;
     private String content;
-    private String date;
+    private long date;
 
-    public NewsItem(String id, String description, String content, String date) {
+    public NewsItem(String id, String description, String content, long date) {
         this.id = id;
         this.description = description;
         this.content = content;
@@ -41,7 +41,7 @@ public class NewsItem extends Item {
         in.readStringArray(data);
         this.id = data[0];
         this.description = data[1];
-        this.date = data[2];
+        this.date = Long.valueOf(data[2]);
         this.content = data[3];
     }
 
@@ -63,7 +63,7 @@ public class NewsItem extends Item {
         return content;
     }
 
-    public String getDate() {
+    public long getDate() {
         return date;
     }
 
@@ -77,13 +77,6 @@ public class NewsItem extends Item {
         return this.id.equals(news.id);
     }
 
-
-    @NonNull
-    @Override
-    public String toString() {
-        return String.format("№%d: %s(%s)", id, description, date);
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -91,7 +84,7 @@ public class NewsItem extends Item {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[]{ id, description, date, content });
+        dest.writeStringArray(new String[]{ id, description, String.valueOf(date), content });
     }
 
     public static final Parcelable.Creator<NewsItem> CREATOR = new Parcelable.Creator<NewsItem>() {
